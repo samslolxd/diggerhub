@@ -1,0 +1,178 @@
+
+local ScreenGui = Instance.new("ScreenGui")
+local main = Instance.new("Frame")
+local Label = Instance.new("TextLabel")
+local Script1 = Instance.new("TextButton")
+local Script2 = Instance.new("TextButton")
+local Script3 = Instance.new("TextButton")
+local Script4 = Instance.new("TextButton")
+local CloseButton = Instance.new("TextButton")
+
+--Properties:
+
+ScreenGui.Parent = game.CoreGui
+
+main.Name = "main"
+main.Parent = ScreenGui
+main.BackgroundColor3 = Color3.fromRGB(170, 170, 255)
+main.Position = UDim2.new(0.686231017, 0, 0.468711674, 0)
+main.Size = UDim2.new(0, 211, 0, 309)
+main.Active = true
+main.Draggable = true
+
+Label.Name = "Label"
+Label.Parent = main
+Label.BackgroundColor3 = Color3.fromRGB(0, 170, 255)
+Label.Size = UDim2.new(0, 211, 0, 50)
+Label.Font = Enum.Font.SciFi
+Label.Text = "Digga Hub"
+Label.TextColor3 = Color3.fromRGB(0, 0, 0)
+Label.TextSize = 14.000
+
+Script1.Name = "Script1"
+Script1.Parent = main
+Script1.BackgroundColor3 = Color3.fromRGB(85, 170, 255)
+Script1.Position = UDim2.new(0.0663507134, 0, 0.213592231, 0)
+Script1.Size = UDim2.new(0, 180, 0, 30)
+Script1.Font = Enum.Font.SourceSans
+Script1.Text = "KC/KCR GodMode"
+Script1.TextColor3 = Color3.fromRGB(0, 0, 0)
+Script1.TextSize = 22.000
+Script1.TextStrokeColor3 = Color3.fromRGB(0, 85, 127)
+Script1.TextStrokeTransparency = 0.000
+Script1.MouseButton1Down:connect(function()
+	loadstring(game:HttpGet("https://raw.githubusercontent.com/Tobias020108Back/YBA-AUT/main/YBA-GUI-Rewrite.lua"))()
+end)
+
+Script2.Name = "Script2"
+Script2.Parent = main
+Script2.BackgroundColor3 = Color3.fromRGB(85, 170, 255)
+Script2.Position = UDim2.new(0.0663507134, 0, 0.352750808, 0)
+Script2.Size = UDim2.new(0, 180, 0, 30)
+Script2.Font = Enum.Font.Gotham
+Script2.Text = "Best Script For SBR"
+Script2.TextColor3 = Color3.fromRGB(0, 0, 0)
+Script2.TextSize = 17.000
+Script2.TextStrokeColor3 = Color3.fromRGB(0, 85, 127)
+Script2.TextStrokeTransparency = 0.000
+Script2.MouseButton1Down:connect(function()
+	getgenv().Key = "HelloEpicGUI"
+	loadstring(game:HttpGet("https://raw.githubusercontent.com/SupBabe/YBAHOPPER/main/YBAv2.lua"))()
+end)
+
+Script3.Name = "Script3"
+Script3.Parent = main
+Script3.BackgroundColor3 = Color3.fromRGB(85, 170, 255)
+Script3.Position = UDim2.new(0.0663507134, 0, 0.491909385, 0)
+Script3.Size = UDim2.new(0, 180, 0, 30)
+Script3.Font = Enum.Font.SourceSans
+Script3.Text = "HP Esp"
+Script3.TextColor3 = Color3.fromRGB(0, 0, 0)
+Script3.TextSize = 22.000
+Script3.TextStrokeColor3 = Color3.fromRGB(0, 85, 127)
+Script3.TextStrokeTransparency = 0.000
+Script3.MouseButton1Down:connect(function()
+	local plr = game.Players.LocalPlayer
+	local camera = game.Workspace.CurrentCamera
+
+	for i, v in pairs(game.Players:GetChildren()) do
+		local plrname = v.Name
+		local TEXT = Drawing.new("Text")
+		TEXT.Visible = false
+		TEXT.Transparency = 1
+		TEXT.Color = Color3.fromRGB(51, 211, 55)
+		TEXT.Size = 20
+		TEXT.Position = Vector2.new(200,200)
+
+		function ESP()
+			game:GetService("RunService").RenderStepped:Connect(function()
+				TEXT.Text = tostring(math.ceil(game.Workspace.Living[plrname].Health.value))
+				if v.Character ~= nil and v.Character:FindFirstChild("HumanoidRootPart") ~= nil and v.Name ~= plr.Name  and v.Character.Humanoid.Health > 0 then
+					local ScreenPos, OnScreen = camera:WorldToViewportPoint(v.Character.HumanoidRootPart.Position)
+					if OnScreen then
+						TEXT.Position = Vector2.new(ScreenPos.X- 20, ScreenPos.Y)
+						TEXT.Visible = true
+					else
+						TEXT.Visible = false
+					end
+				else
+					TEXT.Visible = false
+					if game.Players:FindFirstChild(v.Name) then
+					else
+						Disconnect()
+					end
+				end
+			end)
+		end
+		coroutine.wrap(ESP)()
+	end
+
+	game.Players.PlayerAdded:Connect(function(newplr)
+		local plrnamee = newplr.Name
+		local TEXT = Drawing.new("Text")
+		TEXT.Visible = false
+		TEXT.Transparency = 1
+		TEXT.Color = Color3.fromRGB(51, 211, 55)
+		TEXT.Text = tostring(math.ceil(game.Workspace.Living[plrnamee].Health.value))
+		TEXT.Size = 20
+		TEXT.Position = Vector2.new(200,200)
+
+		function ESP()
+			game:GetService("RunService").RenderStepped:Connect(function()
+				if newplr.Character ~= nil and newplr.Character:FindFirstChild("HumanoidRootPart") ~= nil and newplr.Name ~= plr.Name  and newplr.Character.Humanoid.Health > 0 then
+					local ScreenPos, OnScreen = camera:WorldToViewportPoint(newplr.Character.HumanoidRootPart.Position)
+					if OnScreen then
+						TEXT.Position = Vector2.new(ScreenPos.X - 20, ScreenPos.Y)
+						TEXT.Visible = true
+					else
+						TEXT.Visible = false
+					end
+				else
+					TEXT.Visible = false
+					if game.Players:FindFirstChild(newplr.Name) then
+					else
+						Disconnect()
+					end
+				end
+			end)
+		end
+		coroutine.wrap(ESP)()
+	end)
+end)
+
+Script4.Name = "Script4"
+Script4.Parent = main
+Script4.BackgroundColor3 = Color3.fromRGB(85, 170, 255)
+Script4.Position = UDim2.new(0.0663507134, 0, 0.624595463, 0)
+Script4.Size = UDim2.new(0, 180, 0, 30)
+Script4.Font = Enum.Font.SourceSans
+Script4.Text = "Player ESP"
+Script4.TextColor3 = Color3.fromRGB(0, 0, 0)
+Script4.TextSize = 22.000
+Script4.TextStrokeColor3 = Color3.fromRGB(0, 85, 127)
+Script4.TextStrokeTransparency = 0.000
+Script4.MouseButton1Down:connect(function()
+	loadstring(game:HttpGet(('https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source'),true))()
+end)
+
+CloseButton.Name = "Close Button"
+CloseButton.Parent = main
+CloseButton.BackgroundColor3 = Color3.fromRGB(85, 170, 255)
+CloseButton.Position = UDim2.new(0.848341227, 0, 0, 0)
+CloseButton.Size = UDim2.new(0, 32, 0, 29)
+CloseButton.Font = Enum.Font.SourceSans
+CloseButton.Text = "X"
+CloseButton.TextColor3 = Color3.fromRGB(170, 0, 0)
+CloseButton.TextSize = 43.000
+
+-- Scripts:
+
+local function WPIHHFF_fake_script() -- CloseButton.LocalScript 
+	local script = Instance.new('LocalScript', CloseButton)
+
+	script.Parent.MouseButton1Click:Connect(function()
+		script.Parent.Parent.Visible = false
+	end)
+	
+end
+coroutine.wrap(WPIHHFF_fake_script)()
